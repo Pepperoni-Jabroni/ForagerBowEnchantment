@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "forager_bow_ench",
+  "version": "${version}",
+
+  "name": "",
+  "description": "",
+  "icon": "assets/forager_bow_ench/icon.png",
+  "authors": [
+    "Pepperoni__Jabroni__"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "",
+    "issues": ""
+  },
+
+  "license": "GPL-3.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": ["pepjebs.forager_bow_ench.ForagerBowEnchantmentMod"],
+    "client": ["pepjebs.forager_bow_ench.client.ForagerBowEnchantmentClient"]
+  },
+  "mixins": [
+    "forager_bow_ench.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "fabric": "*",
+    "minecraft": "1.19.4",
+    "java": ">=17"
+  }
+}
