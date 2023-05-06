@@ -10,6 +10,8 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +42,9 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
             // If the blowing kill was done with a forager enchanted bow
             int foragerLevel = ((ForagerArrowEntityInterface) sourceEntity).getForagerLevel();
             if (source.getAttacker() instanceof LivingEntity && foragerLevel > 0) {
+                // Play world sound
+                entity.world.playSound(null, entity.getPos().x, entity.getPos().y, entity.getPos().z,
+                        SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 0.75f, 1.0f);
                 // Spawn the forager death cloud entity
                 var deathCloud = new ForagerDeathCloudEntity(FORAGER_CLOUD_TYPE, entity.world);
                 deathCloud.setOwner((LivingEntity)source.getAttacker());

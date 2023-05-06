@@ -18,4 +18,9 @@ public class ForagerBowEnchantment extends Enchantment {
     public int getMaxLevel() {
         return 2;
     }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return false;
+    }
 }

@@ -34,9 +34,19 @@ public class ForagerProjectileEntity {
             var stack = ((LivingEntity) shooter).getMainHandStack();
             if (stack.hasEnchantments()
                     && EnchantmentHelper.get(stack).containsKey(ForagerBowEnchantmentMod.FORAGER_ENCHANT)) {
-                int level = EnchantmentHelper.get(stack).get(ForagerBowEnchantmentMod.FORAGER_ENCHANT);
-                ((ForagerArrowEntityInterface) projectileEntity).setForagerLevel(level);
+                int enchantLevel = EnchantmentHelper.get(stack).get(ForagerBowEnchantmentMod.FORAGER_ENCHANT);
+                int foragerLevel = getForagerLevelForEnchLevel(enchantLevel);
+                ((ForagerArrowEntityInterface) projectileEntity).setForagerLevel(foragerLevel);
             }
         }
+    }
+
+    private int getForagerLevelForEnchLevel(int enchantLevel) {
+        if (enchantLevel == 1) {
+            // 2: WITH_XP
+            return 2;
+        }
+        // 3: WITH_ALL
+        return  3;
     }
 }

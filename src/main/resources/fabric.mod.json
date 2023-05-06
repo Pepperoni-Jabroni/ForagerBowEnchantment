@@ -3,8 +3,8 @@
   "id": "forager_bow_ench",
   "version": "${version}",
 
-  "name": "",
-  "description": "",
+  "name": "Forager Bow Enchantment",
+  "description": "Adds a new Bow enchant Forager (I & II) which teleport items/xp",
   "icon": "assets/forager_bow_ench/icon.png",
   "authors": [
     "Pepperoni__Jabroni__"
