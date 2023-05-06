@@ -11,7 +11,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
@@ -70,7 +69,7 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
 
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             var sourceEntity = source.getSource();
-            if (!(sourceEntity instanceof ArrowEntity)) {
+            if (!(sourceEntity instanceof ForagerArrowEntityInterface)) {
                 return;
             }
             // If the blowing kill was done with a forager enchanted bow
