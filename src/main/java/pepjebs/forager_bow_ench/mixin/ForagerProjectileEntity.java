@@ -43,8 +43,13 @@ public class ForagerProjectileEntity {
 
     private int getForagerLevelForEnchLevel(int enchantLevel) {
         if (enchantLevel == 1) {
-            // 2: WITH_XP
-            return 2;
+            if (ForagerBowEnchantmentMod.CONFIG == null || ForagerBowEnchantmentMod.CONFIG.doExperienceAsLevelOne) {
+                // 2: WITH_XP
+                return 2;
+            } else {
+                // 1: WITH_ITEMS
+                return 1;
+            }
         }
         // 3: WITH_ALL
         return  3;

@@ -3,6 +3,7 @@ package pepjebs.forager_bow_ench.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import pepjebs.forager_bow_ench.ForagerBowEnchantmentMod;
 
 public class ForagerBowEnchantment extends Enchantment {
     public ForagerBowEnchantment() {
@@ -21,6 +22,13 @@ public class ForagerBowEnchantment extends Enchantment {
 
     @Override
     public boolean isAvailableForRandomSelection() {
-        return false;
+        return ForagerBowEnchantmentMod.CONFIG != null
+                && ForagerBowEnchantmentMod.CONFIG.isForagerAvailableForRandomSelection;
+    }
+
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return ForagerBowEnchantmentMod.CONFIG != null
+                && ForagerBowEnchantmentMod.CONFIG.isForagerAvailableForEnchantedBookOffer;
     }
 }

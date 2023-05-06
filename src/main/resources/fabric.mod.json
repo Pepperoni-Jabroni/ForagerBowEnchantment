@@ -20,7 +20,8 @@
   "environment": "*",
   "entrypoints": {
     "main": ["pepjebs.forager_bow_ench.ForagerBowEnchantmentMod"],
-    "client": ["pepjebs.forager_bow_ench.client.ForagerBowEnchantmentClient"]
+    "client": ["pepjebs.forager_bow_ench.client.ForagerBowEnchantmentClient"],
+    "modmenu": ["pepjebs.forager_bow_ench.config.ForagerBowEnchantModMenuApiImpl"]
   },
   "mixins": [
     "forager_bow_ench.mixins.json"
