@@ -66,41 +66,39 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
         if (livingEntity instanceof PlayerEntity playerEntity) {
             var itemOfEntity = itemEntity.getStack().getItem();
             int itemEntityStackCount = itemEntity.getStack().getCount();
-            if (playerEntity.getInventory().containsAny(Collections.singleton(itemOfEntity))) {
-                // First pass will try to compress on existing stacks
-                for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
-                    var invStack = playerEntity.getInventory().main.get(i);
-                    if (invStack.isOf(itemOfEntity) && (invStack.getMaxCount() > invStack.getCount())) {
-                        int countDiff = invStack.getMaxCount() - invStack.getCount();
-                        int amountToAdd = Math.min(countDiff, itemEntityStackCount);
-                        itemEntityStackCount -= amountToAdd;
-                        playerEntity.getInventory().main.get(i).increment(amountToAdd);
-                        if (ForagerBowEnchantmentMod.shouldLog()) {
-                            ForagerBowEnchantmentMod.LOGGER.info(
-                                    "ForagerDeathCloudEntity: Adding "+amountToAdd
-                                    +" to existing "+itemOfEntity.toString());
-                        }
-                        if (itemEntityStackCount == 0) {
-                            itemEntity.kill();
-                            return true;
-                        }
+            // First pass will try to compress on existing stacks
+            for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
+                var invStack = playerEntity.getInventory().main.get(i);
+                if (invStack.isOf(itemOfEntity) && (invStack.getMaxCount() > invStack.getCount())) {
+                    int countDiff = invStack.getMaxCount() - invStack.getCount();
+                    int amountToAdd = Math.min(countDiff, itemEntityStackCount);
+                    itemEntityStackCount -= amountToAdd;
+                    playerEntity.getInventory().main.get(i).increment(amountToAdd);
+                    if (ForagerBowEnchantmentMod.shouldLog()) {
+                        ForagerBowEnchantmentMod.LOGGER.info(
+                                "ForagerDeathCloudEntity: Adding "+amountToAdd
+                                +" to existing "+itemOfEntity.toString());
                     }
-                }
-                // Second pass will try to insert into empty stack
-                for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
-                    var invStack = playerEntity.getInventory().main.get(i);
-                    if (invStack.isEmpty()) {
-                        var stackToSet = itemEntity.getStack();
-                        if (ForagerBowEnchantmentMod.shouldLog()) {
-                            ForagerBowEnchantmentMod.LOGGER.info(
-                                    "ForagerDeathCloudEntity: Setting blank spot with "
-                                    +itemEntityStackCount+" of "+itemOfEntity.toString());
-                        }
-                        stackToSet.setCount(itemEntityStackCount);
-                        playerEntity.getInventory().main.set(i, itemEntity.getStack());
+                    if (itemEntityStackCount == 0) {
                         itemEntity.kill();
                         return true;
                     }
+                }
+            }
+            // Second pass will try to insert into empty stack
+            for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
+                var invStack = playerEntity.getInventory().main.get(i);
+                if (invStack.isEmpty()) {
+                    var stackToSet = itemEntity.getStack();
+                    if (ForagerBowEnchantmentMod.shouldLog()) {
+                        ForagerBowEnchantmentMod.LOGGER.info(
+                                "ForagerDeathCloudEntity: Setting blank spot with "
+                                +itemEntityStackCount+" of "+itemOfEntity.toString());
+                    }
+                    stackToSet.setCount(itemEntityStackCount);
+                    playerEntity.getInventory().main.set(i, stackToSet);
+                    itemEntity.kill();
+                    return true;
                 }
             }
         }

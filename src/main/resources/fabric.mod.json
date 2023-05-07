@@ -10,9 +10,9 @@
     "Pepperoni__Jabroni__"
   ],
   "contact": {
-    "homepage": "",
-    "sources": "",
-    "issues": ""
+    "homepage": "https://github.com/Pepperoni-Jabroni/ForagerBowEnchantment",
+    "sources": "https://github.com/Pepperoni-Jabroni/ForagerBowEnchantment",
+    "issues": "https://github.com/Pepperoni-Jabroni/ForagerBowEnchantment/issues"
   },
 
   "license": "GPL-3.0",
