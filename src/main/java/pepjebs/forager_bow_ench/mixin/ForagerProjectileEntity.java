@@ -42,12 +42,23 @@ public class ForagerProjectileEntity implements ForagerArrowEntityInterface {
             float divergence,
             CallbackInfo ci
     ) {
+        if (ForagerBowEnchantmentMod.shouldLog()) {
+            ForagerBowEnchantmentMod.LOGGER.info("ProjectileEntity: Called ProjectileEntity.setVelocity");
+        }
         if (shooter instanceof LivingEntity) {
             var stack = ((LivingEntity) shooter).getMainHandStack();
+            if (ForagerBowEnchantmentMod.shouldLog()) {
+                ForagerBowEnchantmentMod.LOGGER.info(
+                        "ProjectileEntity: Found stack "+stack.getItem().getName().getString());
+            }
             if (stack.hasEnchantments()
                     && EnchantmentHelper.get(stack).containsKey(ForagerBowEnchantmentMod.FORAGER_ENCHANT)) {
                 int enchantLevel = EnchantmentHelper.get(stack).get(ForagerBowEnchantmentMod.FORAGER_ENCHANT);
                 int foragerLevel = getForagerLevelForEnchLevel(enchantLevel);
+                if (ForagerBowEnchantmentMod.shouldLog()) {
+                    ForagerBowEnchantmentMod.LOGGER.info(
+                            "ProjectileEntity: enchantLevel "+enchantLevel+" foragerLevel "+foragerLevel);
+                }
                 ((ForagerArrowEntityInterface) projectileEntity).setForagerLevel(foragerLevel);
             }
         }

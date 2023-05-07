@@ -8,5 +8,7 @@
   "text.autoconfig.forager_bow_ench.option.isForagerAvailableForEnchantedBookOffer": "Forager Available For Enchanted Book Offer",
   "text.autoconfig.forager_bow_ench.option.isForagerAvailableForEnchantedBookOffer.@Tooltip": "If true, Forager will be possible to get from Enchanted Book Offers. If false, it will not.",
   "text.autoconfig.forager_bow_ench.option.isForagerAvailableInEndCities": "Forager Available In End Cities",
-  "text.autoconfig.forager_bow_ench.option.isForagerAvailableInEndCities.@Tooltip": "If true, Forager will be possible to get from End City Chests. If false, it will not."
+  "text.autoconfig.forager_bow_ench.option.isForagerAvailableInEndCities.@Tooltip": "If true, Forager will be possible to get from End City Chests. If false, it will not.",
+  "text.autoconfig.forager_bow_ench.option.enableLifecycleDebugLogging": "Enable Lifecycle Debug Logging",
+  "text.autoconfig.forager_bow_ench.option.enableLifecycleDebugLogging.@Tooltip": "If true, the mod will print important debug events to the MC Log."
 }

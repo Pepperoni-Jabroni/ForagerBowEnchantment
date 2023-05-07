@@ -69,12 +69,26 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
 
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             var sourceEntity = source.getSource();
+            if (ForagerBowEnchantmentMod.shouldLog()) {
+                ForagerBowEnchantmentMod.LOGGER.info(
+                        "AfterDeath: sourceEntity "+(sourceEntity == null
+                                ? "NULL" : sourceEntity.toString()));
+            }
             if (!(sourceEntity instanceof ForagerArrowEntityInterface)) {
+                if (ForagerBowEnchantmentMod.shouldLog()) {
+                    ForagerBowEnchantmentMod.LOGGER.info("AfterDeath: Returning - not ForagerArrowEntityInterface");
+                }
                 return;
             }
             // If the blowing kill was done with a forager enchanted bow
             int foragerLevel = ((ForagerArrowEntityInterface) sourceEntity).getForagerLevel();
+            if (ForagerBowEnchantmentMod.shouldLog()) {
+                ForagerBowEnchantmentMod.LOGGER.info("AfterDeath: foragerLevel "+foragerLevel);
+            }
             if (source.getAttacker() instanceof LivingEntity && foragerLevel > 0) {
+                if (ForagerBowEnchantmentMod.shouldLog()) {
+                    ForagerBowEnchantmentMod.LOGGER.info("AfterDeath: Creating death cloud");
+                }
                 // Play world sound
                 entity.world.playSound(null, entity.getPos().x, entity.getPos().y, entity.getPos().z,
                         SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 0.75f, 1.0f);
@@ -92,5 +106,10 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
                 entity.world.spawnEntity(deathCloud);
             }
         });
+    }
+
+    public static boolean shouldLog() {
+        return ForagerBowEnchantmentMod.CONFIG != null
+                && ForagerBowEnchantmentMod.CONFIG.enableLifecycleDebugLogging;
     }
 }

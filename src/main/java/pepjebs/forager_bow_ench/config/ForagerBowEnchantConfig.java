@@ -24,4 +24,8 @@ public class ForagerBowEnchantConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip()
     @Comment("If true, Forager will be possible to get from End City Chests. If false, it will not.")
     public boolean isForagerAvailableInEndCities = true;
+
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("If true, the mod will print important debug events to the MC Log.")
+    public boolean enableLifecycleDebugLogging = false;
 }
