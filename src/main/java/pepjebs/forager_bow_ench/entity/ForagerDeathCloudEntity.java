@@ -2,10 +2,11 @@ package pepjebs.forager_bow_ench.entity;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import pepjebs.forager_bow_ench.ForagerBowEnchantmentMod;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
@@ -34,6 +35,11 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
         for(var xpOrb: xpInBox){
             if (this.level >= 2 && owner != null) {
                 xpOrb.teleport(owner.getX(), owner.getY(), owner.getZ());
+                world.playSound(null,
+                        owner.getX(), owner.getY(), owner.getZ(),
+                        SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                        SoundCategory.PLAYERS,
+                        0.5f, 1.0f);
                 if (ForagerBowEnchantmentMod.shouldLog()) {
                     ForagerBowEnchantmentMod.LOGGER.info("ForagerDeathCloudEntity: Teleporting xp orb...");
                 }
@@ -58,6 +64,11 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
                     owner.dropStack(item.getStack());
                     item.kill();
                 }
+                world.playSound(null,
+                        owner.getX(), owner.getY(), owner.getZ(),
+                        SoundEvents.ENTITY_ITEM_PICKUP,
+                        SoundCategory.PLAYERS,
+                        0.5f, 1.0f);
             }
         }
     }
