@@ -2,6 +2,7 @@ package pepjebs.forager_bow_ench.entity;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
@@ -59,60 +60,18 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
                 if (ForagerBowEnchantmentMod.shouldLog()) {
                     ForagerBowEnchantmentMod.LOGGER.info("ForagerDeathCloudEntity: Transferring item...");
                 }
-                var didCompress = tryInvStack(owner, item);
-                if (!didCompress) {
+                var didInsert = ((ServerPlayerEntity)owner).getInventory().insertStack(item.getStack());
+                if (!didInsert) {
                     owner.dropStack(item.getStack());
-                    item.kill();
+                } else {
+                    world.playSound(null,
+                            owner.getX(), owner.getY(), owner.getZ(),
+                            SoundEvents.ENTITY_ITEM_PICKUP,
+                            SoundCategory.PLAYERS,
+                            0.5f, 1.0f);
                 }
-                world.playSound(null,
-                        owner.getX(), owner.getY(), owner.getZ(),
-                        SoundEvents.ENTITY_ITEM_PICKUP,
-                        SoundCategory.PLAYERS,
-                        0.5f, 1.0f);
+                item.kill();
             }
         }
-    }
-
-    private boolean tryInvStack(LivingEntity livingEntity, ItemEntity itemEntity) {
-        if (livingEntity instanceof PlayerEntity playerEntity) {
-            var itemOfEntity = itemEntity.getStack().getItem();
-            int itemEntityStackCount = itemEntity.getStack().getCount();
-            // First pass will try to compress on existing stacks
-            for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
-                var invStack = playerEntity.getInventory().main.get(i);
-                if (invStack.isOf(itemOfEntity) && (invStack.getMaxCount() > invStack.getCount())) {
-                    int countDiff = invStack.getMaxCount() - invStack.getCount();
-                    int amountToAdd = Math.min(countDiff, itemEntityStackCount);
-                    itemEntityStackCount -= amountToAdd;
-                    playerEntity.getInventory().main.get(i).increment(amountToAdd);
-                    if (ForagerBowEnchantmentMod.shouldLog()) {
-                        ForagerBowEnchantmentMod.LOGGER.info(
-                                "ForagerDeathCloudEntity: Adding "+amountToAdd
-                                +" to existing "+itemOfEntity.toString());
-                    }
-                    if (itemEntityStackCount == 0) {
-                        itemEntity.kill();
-                        return true;
-                    }
-                }
-            }
-            // Second pass will try to insert into empty stack
-            for(int i = 0; i < playerEntity.getInventory().main.size(); i++) {
-                var invStack = playerEntity.getInventory().main.get(i);
-                if (invStack.isEmpty()) {
-                    var stackToSet = itemEntity.getStack();
-                    if (ForagerBowEnchantmentMod.shouldLog()) {
-                        ForagerBowEnchantmentMod.LOGGER.info(
-                                "ForagerDeathCloudEntity: Setting blank spot with "
-                                +itemEntityStackCount+" of "+itemOfEntity.toString());
-                    }
-                    stackToSet.setCount(itemEntityStackCount);
-                    playerEntity.getInventory().main.set(i, stackToSet);
-                    itemEntity.kill();
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }
