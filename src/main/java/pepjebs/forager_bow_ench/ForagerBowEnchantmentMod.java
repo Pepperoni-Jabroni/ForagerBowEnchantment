@@ -90,10 +90,10 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
                     ForagerBowEnchantmentMod.LOGGER.info("AfterDeath: Creating death cloud");
                 }
                 // Play world sound
-                entity.world.playSound(null, entity.getPos().x, entity.getPos().y, entity.getPos().z,
+                entity.getWorld().playSound(null, entity.getPos().x, entity.getPos().y, entity.getPos().z,
                         SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 0.75f, 1.0f);
                 // Spawn the forager death cloud entity
-                var deathCloud = new ForagerDeathCloudEntity(FORAGER_CLOUD_TYPE, entity.world);
+                var deathCloud = new ForagerDeathCloudEntity(FORAGER_CLOUD_TYPE, entity.getWorld());
                 deathCloud.setOwner((LivingEntity)source.getAttacker());
                 deathCloud.setForagerLevel(foragerLevel);
                 deathCloud.setPosition(entity.getPos());
@@ -103,7 +103,7 @@ public class ForagerBowEnchantmentMod implements ModInitializer {
                 deathCloud.setDuration(30);;
                 deathCloud.setColor(12321023);
                 deathCloud.setRadiusGrowth(-deathCloud.getRadius() / (float)deathCloud.getDuration());
-                entity.world.spawnEntity(deathCloud);
+                entity.getWorld().spawnEntity(deathCloud);
             }
         });
     }

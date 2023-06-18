@@ -26,17 +26,17 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.level == 0 || this.world.isClient()) {
+        if (this.level == 0 || this.getWorld().isClient()) {
             return;
         }
         var owner = this.getOwner();
-        List<ItemEntity> itemsInBox = this.world.getNonSpectatingEntities(ItemEntity.class, this.getBoundingBox());
-        List<ExperienceOrbEntity> xpInBox = this.world.getNonSpectatingEntities(
+        List<ItemEntity> itemsInBox = this.getWorld().getNonSpectatingEntities(ItemEntity.class, this.getBoundingBox());
+        List<ExperienceOrbEntity> xpInBox = this.getWorld().getNonSpectatingEntities(
                 ExperienceOrbEntity.class, this.getBoundingBox());
         for(var xpOrb: xpInBox){
             if (this.level >= 2 && owner != null) {
                 xpOrb.teleport(owner.getX(), owner.getY(), owner.getZ());
-                world.playSound(null,
+                this.getWorld().playSound(null,
                         owner.getX(), owner.getY(), owner.getZ(),
                         SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                         SoundCategory.PLAYERS,
@@ -64,7 +64,7 @@ public class ForagerDeathCloudEntity extends AreaEffectCloudEntity {
                 if (!didInsert) {
                     owner.dropStack(item.getStack());
                 } else {
-                    world.playSound(null,
+                    this.getWorld().playSound(null,
                             owner.getX(), owner.getY(), owner.getZ(),
                             SoundEvents.ENTITY_ITEM_PICKUP,
                             SoundCategory.PLAYERS,
